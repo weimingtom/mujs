@@ -4,6 +4,7 @@
 
 #ifdef _MSC_VER
 typedef unsigned __int64 uint64_t;
+typedef signed __int64 int64_t;
 #else
 #include <stdint.h>
 #endif
@@ -46,7 +47,11 @@ static void Np_toString(js_State *J)
 		double number = self->u.number;
 		int sign = self->u.number < 0;
 		js_Buffer *sb = NULL;
+#ifdef _MSC_VER
+		uint64_t u; int64_t limit = ((uint64_t)1<<52);
+#else
 		uint64_t u, limit = ((uint64_t)1<<52);
+#endif
 
 		int ndigits, exp, point;
 

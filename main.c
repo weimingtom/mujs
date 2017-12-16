@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _MSC_VER
+#include <io.h> /*for isatty*/
+#else
 #include <unistd.h>
+#endif
 
 #include "mujs.h"
 
@@ -105,7 +109,7 @@ static void jsB_readline(js_State *J)
 
 static void jsB_quit(js_State *J)
 {
-	exit(js_tonumber(J, 1));
+	exit((int)js_tonumber(J, 1));
 }
 
 static const char *require_js =
